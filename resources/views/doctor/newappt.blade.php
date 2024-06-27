@@ -11,30 +11,23 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Title-->
-                    <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">All Appointment
+                    <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Appointment
                         <!--begin::Separator-->
                         <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                         <!--end::Separator-->
                         <!--begin::Description-->
-                        <small class="text-muted fs-7 fw-bold my-1 ms-1">Appoinment</small>
+                        <small class="text-muted fs-7 fw-bold my-1 ms-1">Appointment List</small>
                         <!--end::Description-->
                         <!--begin::Separator-->
                         <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                         <!--end::Separator-->
                         <!--begin::Description-->
-                        <small class="text-muted fs-7 fw-bold my-1 ms-1">New Appoinment</small>
+                        <small class="text-muted fs-7 fw-bold my-1 ms-1">New Appointment</small>
                         <!--end::Description-->
                     </h1>
                     <!--end::Title-->
                 </div>
                 <!--end::Page title-->
-                {{-- <!--begin::Actions-->
-                <div class="d-flex align-items-center py-1">
-                    <!--begin::Button-->
-                    <a href="/booking-apt" class="btn btn-sm btn-primary">Create</a>
-                    <!--end::Button-->
-                </div>
-                <!--end::Actions--> --}}
             </div>
             <!--end::Container-->
         </div>
@@ -52,21 +45,10 @@
                                 <h3 class="card-title align-items-start flex-column">
                                     <span class="card-label fw-bolder fs-3 mb-1">New Appointment</span>
                                 </h3>
-                                {{-- <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top"
-                                    data-bs-trigger="hover" title="Click to book an appoinment">
-                                    <a href="/booking-apt" class="btn btn-sm btn-light btn-active-primary">
-                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                        <span class="svg-icon svg-icon-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none">
-                                                <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2"
-                                                    rx="1" transform="rotate(-90 11.364 20.364)" fill="black" />
-                                                <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
-                                                    fill="black" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->New Appointment</a>
-                                </div> --}}
+                                <div class="card-toolbar">
+                                    <input type="text" name="search" id="search" class="form-control"
+                                        placeholder="Search Appointments">
+                                </div>
                             </div>
                             <!--end::Header-->
                             <!--begin::Body-->
@@ -89,105 +71,20 @@
                                         </thead>
                                         <!--end::Table head-->
                                         <!--begin::Table body-->
-                                        <tbody>
-                                            @php
-                                                $no = 1;
-                                            @endphp
-                                            @if ($appointment != null || $appointment != 0)
-                                                @foreach ($appointment as $appointmenttable)
-                                                    <tr>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="d-flex justify-content-start flex-column">
-                                                                    <a
-                                                                        class="text-dark fw-bolder text-hover-primary fs-6">{{ $no++ }}</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <a
-                                                                class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $appointmenttable->AppointmentNumber }}</a>
-                                                        </td>
-                                                        <td>
-                                                            <a
-                                                                class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $appointmenttable->name }}</a>
-                                                        </td>
-                                                        <td>
-                                                            <a
-                                                                class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $appointmenttable->patient->user->email ?? 'No Email' }}</a>
-                                                        </td>
-                                                        <td>
-                                                            <a
-                                                                class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $appointmenttable->doctor->user->name ?? 'No Doctor' }}</a>
-                                                        </td>
-                                                        <td>
-                                                            <a
-                                                                class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ date('d-m-Y', strtotime($appointmenttable->AppointmentDate)) }}</a>
-                                                        </td>
-                                                        <td>
-                                                            <a
-                                                                class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $appointmenttable->bookingtime->AppointmentTime }}</a>
-                                                        </td>
-                                                        @if ($appointmenttable->Status == 'Approved')
-                                                            <td>
-                                                                <span
-                                                                    class="badge badge-light-success fs-8 fw-bolder my-2">Approved</span>
-                                                            </td>
-                                                        @elseif ($appointmenttable->Status == 'Cancelled')
-                                                            <td>
-                                                                <span
-                                                                    class="badge badge-light-danger fs-8 fw-bolder my-2">Rejected</span>
-                                                            </td>
-                                                        @else
-                                                            <td>
-                                                                <span
-                                                                    class="badge badge-light-warning fs-8 fw-bolder my-2">In
-                                                                    Progress</span>
-                                                            </td>
-                                                        @endif
-
-                                                        <td>
-                                                            <div class="d-flex justify-content-end flex-shrink-0">
-                                                                <a href="{{ route('detailAppointment.show', [$appointmenttable->id, $appointmenttable->AppointmentNumber]) }}"
-                                                                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                                    <span class="svg-icon svg-icon-3">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="24" height="24"
-                                                                            viewBox="0 0 24 24" fill="none">
-                                                                            <path
-                                                                                d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                                                fill="black" />
-                                                                            <path opacity="0.3"
-                                                                                d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                                                fill="black" />
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                                <tr>
-                                                    <td colspan="8"> No record found against this search</td>
-                                                </tr>
-                                            @endif
+                                        <tbody id="appointment_table">
+                                            {{-- @include('partials.appointment_table', ['appointment' => $appointment]) --}}
                                         </tbody>
-
                                         <!--end::Table body-->
                                     </table>
                                     <!--end::Table-->
                                 </div>
                                 <!--end::Table container-->
                                 <!--begin::Pagination-->
-                                <div class="d-flex justify-content-end">
-                                    {{ $appointment->links('vendor.pagination.bootstrap-4') }}
+                                <div class="d-flex justify-content-end" id="pagination">
                                 </div>
                                 <!--end::Pagination-->
                             </div>
-                            <!--begin::Body-->
+                            <!--end::Body-->
                         </div>
                         <!--end::Tables Widget 9-->
                     </div>
@@ -196,4 +93,39 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function fetch_data(query = '', page = 1) {
+            $.ajax({
+                url: "{{ route('searchnewapptdoc') }}",
+                method: 'GET',
+                data: {
+                    query: query,
+                    page: page
+                },
+                dataType: 'json',
+                success: function(data) {
+                    $('#appointment_table').html(data.table_data);
+                    $('#pagination').html(data.pagination);
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            fetch_data();
+
+            $(document).on('keyup', '#search', function() {
+                var query = $(this).val();
+                fetch_data(query);
+            });
+
+            $(document).on('click', '.pagination a', function(event) {
+                event.preventDefault();
+                var query = $('#search').val();
+                var page = $(this).attr('href').split('page=')[1];
+                fetch_data(query, page);
+            });
+        });
+    </script>
 @endsection

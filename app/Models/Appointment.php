@@ -22,6 +22,7 @@ class Appointment extends Model
         'ApplyDate',
         'Remark',
         'Status',
+        'DocMsg'
     ];
     protected $dates = ['AppointmentDate'];
     protected $primary = ['id'];

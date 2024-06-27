@@ -57,7 +57,8 @@
                                     <div class="d-flex align-items-center flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                         <!--begin::Title-->
                                         <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
-                                            <a href="#" class="fs-5 text-gray-800 text-hover-primary fw-bolder">All
+                                            <a href="{{ route('allapptdoc') }}"
+                                                class="fs-5 text-gray-800 text-hover-primary fw-bolder">All
                                                 Appoinment</a>
                                             {{-- <span class="text-gray-400 fw-bold fs-7 my-1">Study highway types</span>
                                             <span class="text-gray-400 fw-bold fs-7">By:
@@ -66,7 +67,7 @@
                                         <!--end::Title-->
                                         <!--begin::Info-->
                                         <div class="text-end py-lg-0 py-2">
-                                            <span class="text-gray-800 fw-boldest fs-3">{{$appointmentsall}}</span>
+                                            <span class="text-gray-800 fw-boldest fs-3">{{ $appointmentsall }}</span>
                                             <span class="text-gray-400 fs-7 fw-bold d-block">Appt</span>
                                         </div>
                                         <!--end::Info-->
@@ -79,7 +80,8 @@
                                     <div class="d-flex align-items-center flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                         <!--begin::Title-->
                                         <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
-                                            <a href="#" class="fs-5 text-gray-800 text-hover-primary fw-bolder">New
+                                            <a href="{{ route('newapptdoc') }}"
+                                                class="fs-5 text-gray-800 text-hover-primary fw-bolder">New
                                                 Appoinment</a>
                                             {{-- <span class="text-gray-400 fw-bold fs-7 my-1">Study highway types</span>
                                             <span class="text-gray-400 fw-bold fs-7">By:
@@ -88,7 +90,7 @@
                                         <!--end::Title-->
                                         <!--begin::Info-->
                                         <div class="text-end py-lg-0 py-2">
-                                            <span class="text-gray-800 fw-boldest fs-3">{{$appointmentsnew}}</span>
+                                            <span class="text-gray-800 fw-boldest fs-3">{{ $appointmentsnew }}</span>
                                             <span class="text-gray-400 fs-7 fw-bold d-block">Appt</span>
                                         </div>
                                         <!--end::Info-->
@@ -101,7 +103,7 @@
                                     <div class="d-flex align-items-center flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                         <!--begin::Title-->
                                         <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
-                                            <a href="#"
+                                            <a href="{{ route('approvedapptdoc') }}"
                                                 class="fs-5 text-gray-800 text-hover-primary fw-bolder">Approved
                                                 Appoinment</a>
                                             {{-- <span class="text-gray-400 fw-bold fs-7 my-1">Study highway types</span>
@@ -111,7 +113,7 @@
                                         <!--end::Title-->
                                         <!--begin::Info-->
                                         <div class="text-end py-lg-0 py-2">
-                                            <span class="text-gray-800 fw-boldest fs-3">{{$appointmentsapproved}}</span>
+                                            <span class="text-gray-800 fw-boldest fs-3">{{ $appointmentsapproved }}</span>
                                             <span class="text-gray-400 fs-7 fw-bold d-block">Appt</span>
                                         </div>
                                         <!--end::Info-->
@@ -124,7 +126,7 @@
                                     <div class="d-flex align-items-center flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                         <!--begin::Title-->
                                         <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
-                                            <a href="#"
+                                            <a href="{{ route('cancelapptdoc') }}"
                                                 class="fs-5 text-gray-800 text-hover-primary fw-bolder">Cancelled
                                                 Appoinment</a>
                                             {{-- <span class="text-gray-400 fw-bold fs-7 my-1">Study highway types</span>
@@ -134,7 +136,7 @@
                                         <!--end::Title-->
                                         <!--begin::Info-->
                                         <div class="text-end py-lg-0 py-2">
-                                            <span class="text-gray-800 fw-boldest fs-3">{{$appointmentscancel}}</span>
+                                            <span class="text-gray-800 fw-boldest fs-3">{{ $appointmentscancel }}</span>
                                             <span class="text-gray-400 fs-7 fw-bold d-block">Appt</span>
                                         </div>
                                         <!--end::Info-->
@@ -153,7 +155,8 @@
                             <!--begin::Header-->
                             <div class="card-header align-items-center border-0 mt-4">
                                 <h3 class="card-title align-items-start flex-column">
-                                    <span class="fw-bolder text-dark">Latest Appoinment</span>
+                                    <a href="{{ route('allapptdoc') }}" class="fw-bolder text-dark">Latest
+                                        Appoinment</a>
                                 </h3>
                                 <div class="card-toolbar">
                                     <!--end::Menu-->
@@ -168,8 +171,7 @@
                                         <!--begin::Title-->
                                         <div class="d-flex flex-row-fluid flex-wrap align-items-center">
                                             <div class="flex-grow-1 me-2">
-                                                <a href="#"
-                                                    class="text-gray-800 fw-bolder text-hover-primary fs-6">{{ $appointmentslist->name }}</a>
+                                                <a class="text-gray-800 fw-bolder fs-6">{{ $appointmentslist->name }}</a>
                                                 <span class="text-muted fw-bold d-block pt-1">Date:
                                                     {{ Carbon::parse($appointmentslist->AppointmentDate)->format('d F, Y') }}
                                                     |Time: {{ $appointmentslist->bookingtime->AppointmentTime }}</span>

@@ -31,13 +31,13 @@
                     <!--end::Title-->
                 </div>
                 <!--end::Page title-->
-                <!--begin::Actions-->
+                {{-- <!--begin::Actions-->
                 <div class="d-flex align-items-center py-1">
                     <!--begin::Button-->
                     <a href="/booking-apt" class="btn btn-sm btn-primary">Create</a>
                     <!--end::Button-->
                 </div>
-                <!--end::Actions-->
+                <!--end::Actions--> --}}
             </div>
             <!--end::Container-->
         </div>
@@ -55,11 +55,11 @@
                             <div class="me-7 mb-4">
                                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                                     @if (auth()->user()->role == 'doctor')
-                                        <img src="metronic/assets/media/avatars/doctor.svg" alt="image" />
+                                        <img src="{{ asset('metronic/assets/media/avatars/doctor.svg') }}" alt="image" />
                                     @elseif(auth()->user()->role == 'admin')
-                                        <img src="metronic/assets/media/avatars/admin.png" alt="image" />
+                                        <img src="{{ asset('metronic/assets/media/avatars/admin.png') }}" alt="image" />
                                     @else
-                                        <img src="metronic/assets/media/avatars/boy.svg" alt="image" />
+                                        <img src="{{ asset('metronic/assets/media/avatars/boy.svg') }}" alt="image" />
                                     @endif
                                     <div
                                         class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
@@ -131,26 +131,37 @@
                                                 <!--end::Svg Icon-->{{ Auth::user()->email }}</a>
                                         </div>
                                         <!--end::Info-->
+                                        <a
+                                            class="text-gray-500 fs-2 fw-bolder me-1 ">{{ Auth::user()->doctor->specialization->specialization }}</a>
+                                        <a
+                                            class="d-flex align-items-center text-gray-400 mb-2">{{ Auth::user()->doctor->qualification }}</a>
                                     </div>
                                     <!--end::User-->
                                 </div>
                                 <!--end::Title-->
                             </div>
                             <!--end::Info-->
+
                         </div>
                         <!--end::Details-->
                         <!--begin::Navs-->
                         <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder">
                             <!--begin::Nav item-->
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active"
-                                    href="{{ route('profile') }}">Overview</a>
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5"
+                                    href="{{ route('docprofile') }}">Overview</a>
                             </li>
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5"
-                                    href="{{ route('usersetting') }}">Settings</a>
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                    href="{{ route('docsetting') }}">Settings</a>
+                            </li>
+                            <!--end::Nav item-->
+                            <!--begin::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active"
+                                    href="{{ route('docpass') }}">Security</a>
                             </li>
                             <!--end::Nav item-->
                         </ul>
@@ -158,117 +169,61 @@
                     </div>
                 </div>
                 <!--end::Navbar-->
-                <!--begin::details View-->
-                <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+                <!--begin::Basic info-->
+                <div class="card mb-5 mb-xl-10">
                     <!--begin::Card header-->
                     <div class="card-header border-0">
                         <!--begin::Card title-->
                         <div class="card-title m-0">
-                            <h3 class="fw-bolder m-0">Profile Details</h3>
+                            <h3 class="fw-bolder m-0">Change Password</h3>
                         </div>
                         <!--end::Card title-->
-                        <!--begin::Action-->
-                        <a href="{{ route('usersetting') }}" class="btn btn-primary align-self-center">Edit
-                            Profile</a>
-                        <!--end::Action-->
                     </div>
                     <!--begin::Card header-->
-                    <!--begin::Card body-->
-                    <div class="card-body p-9">
-                        <!--begin::Row-->
-                        <div class="row mb-7">
-                            <!--begin::Label-->
-                            <label class="col-lg-4 fw-bold text-muted">Full Name</label>
-                            <!--end::Label-->
-                            <!--begin::Col-->
-                            <div class="col-lg-8">
-                                <span class="fw-bolder fs-6 text-gray-800">{{ Auth::user()->name }}</span>
+                    <!--begin::Content-->
+                    <div id="kt_account_profile_details" class="collapse show">
+                        <!--begin::Form-->
+                        <form method="post" name="submit" id="kt_account_profile_details_form" class="form"
+                            action="{{ route('docpass.update', Auth::user()->id) }}">
+                            @csrf
+                            @method('put')
+                            <!--begin::Card body-->
+                            <div class="card-body border-top p-9">
+                                <!--begin::Input group-->
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">Password</label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-8">
+                                        <!--begin::Row-->
+                                        <div class="row">
+                                            <!--begin::Col-->
+                                            <div class="col-lg-12 fv-row">
+                                                <input type="text" name="password"
+                                                    class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                                    placeholder="Password" value="" required/>
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Row-->
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Input group-->
                             </div>
-                            <!--end::Col-->
-                        </div>
-                        <!--end::Row-->
-                        <!--begin::Input group-->
-                        <div class="row mb-7">
-                            <!--begin::Label-->
-                            <label class="col-lg-4 fw-bold text-muted">Email</label>
-                            <!--end::Label-->
-                            <!--begin::Col-->
-                            <div class="col-lg-8 fv-row">
-                                <span class="fw-bolder fs-6 text-gray-800">{{ Auth::user()->email }}</span>
+                            <!--end::Card body-->
+                            <!--begin::Actions-->
+                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                <button type="submit" class="btn btn-primary" name="submit">Save Changes</button>
                             </div>
-                            <!--end::Col-->
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="row mb-7">
-                            <!--begin::Label-->
-                            <label class="col-lg-4 fw-bold text-muted">Contact Phone</label>
-                            <!--end::Label-->
-                            <!--begin::Col-->
-                            <div class="col-lg-8 d-flex align-items-center">
-                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{ Auth::user()->patient->phoneno }}</span>
-                            </div>
-                            <!--end::Col-->
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="row mb-7">
-                            <!--begin::Label-->
-                            <label class="col-lg-4 fw-bold text-muted">Address</label>
-                            <!--end::Label-->
-                            <!--begin::Col-->
-                            <div class="col-lg-8">
-                                <span class="fw-bolder fs-6 text-gray-800">{{ Auth::user()->patient->address }}</span>
-                            </div>
-                            <!--end::Col-->
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="row mb-7">
-                            <!--begin::Label-->
-                            <label class="col-lg-4 fw-bold text-muted">Gender</label>
-                            <!--end::Label-->
-                            <!--begin::Col-->
-                            <div class="col-lg-8">
-                                @if (Auth::user()->patient->gender == 'm')
-                                    <span class="fw-bolder fs-6 text-gray-800">Male</span>
-                                @elseif (Auth::user()->doctor->gender == 'f')
-                                    <span class="fw-bolder fs-6 text-gray-800">Female</span>
-                                @endif
-
-                            </div>
-                            <!--end::Col-->
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="row mb-7">
-                            <!--begin::Label-->
-                            <label class="col-lg-4 fw-bold text-muted">Birthday</label>
-                            <!--end::Label-->
-                            <!--begin::Col-->
-                            <div class="col-lg-8">
-                                <span
-                                    class="fw-bolder fs-6 text-gray-800">{{ Carbon::parse(Auth::user()->patient->dob)->format('d F') }}</span>
-                            </div>
-                            <!--end::Col-->
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="row mb-7">
-                            <!--begin::Label-->
-                            <label class="col-lg-4 fw-bold text-muted">Joined Date</label>
-                            <!--end::Label-->
-                            <!--begin::Col-->
-                            <div class="col-lg-8">
-                                <span
-                                    class="fw-bolder fs-6 text-gray-800">{{ Carbon::parse(Auth::user()->patient->created_at)->format('d F, Y') }}</span>
-                            </div>
-                            <!--end::Col-->
-                        </div>
-                        <!--end::Input group-->
+                            <!--end::Actions-->
+                        </form>
+                        <!--end::Form-->
                     </div>
-                    <!--end::Card body-->
+                    <!--end::Content-->
                 </div>
+                <!--end::Basic info-->
                 <!--end::details View-->
             </div>
         </div>

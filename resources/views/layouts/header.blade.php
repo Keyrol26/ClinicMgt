@@ -16,24 +16,46 @@
                     <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch"
                         id="#kt_header_menu" data-kt-menu="true">
                         <div class="menu-item me-lg-1">
-                            <a class="menu-link py-3" href="{{ route('userindex') }}">
-                                <span class="menu-title">Dashboard</span>
+                            @if (auth()->user()->role == 'doctor')
+                                <a class="menu-link py-3" href="{{ route('doctor.home') }}">
+                                @elseif(auth()->user()->role == 'admin')
+                                    <a class="menu-link py-3" href="{{ route('userindex') }}">
+                                    @else
+                                        <a class="menu-link py-3" href="{{ route('userindex') }}">
+                            @endif
+
+                            <span class="menu-title">Dashboard</span>
                             </a>
                         </div>
                     </div>
                     <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch"
                         id="#kt_header_menu" data-kt-menu="true">
                         <div class="menu-item me-lg-1">
-                            <a class="menu-link py-3" href="{{ route('booking-form') }}">
-                                <span class="menu-title">Appointment</span>
+                            @if (auth()->user()->role == 'doctor')
+                                <a class="menu-link py-3" href="{{ route('allapptdoc') }}">
+                                @elseif(auth()->user()->role == 'admin')
+                                    <a class="menu-link py-3" href="{{ route('booking-form') }}">
+                                    @else
+                                        <a class="menu-link py-3" href="{{ route('booking-form') }}">
+                            @endif
+
+                            <span class="menu-title">Appointment</span>
                             </a>
                         </div>
                     </div>
                     <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch"
                         id="#kt_header_menu" data-kt-menu="true">
                         <div class="menu-item me-lg-1">
-                            <a class="menu-link py-3" href="{{ route('profile') }}">
-                                <span class="menu-title">Profile</span>
+                            @if (auth()->user()->role == 'doctor')
+                                <a class="menu-link py-3" href="{{ route('docprofile') }}">
+                                @elseif(auth()->user()->role == 'admin')
+                                    <a class="menu-link py-3" href="{{ route('booking-form') }}">
+                                    @else
+                                        <a class="menu-link py-3" href="{{ route('profile') }}">
+                            @endif
+
+
+                            <span class="menu-title">Profile</span>
                             </a>
                         </div>
                     </div>
@@ -85,7 +107,7 @@
                                             <span
                                                 class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{ Auth::user()->role }}</span>
                                         </div>
-                                        <a href="#"
+                                        <a
                                             class="fw-bold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
                                     </div>
                                     <!--end::Username-->
@@ -97,7 +119,14 @@
                             <!--end::Menu separator-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
-                                <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
+                                @if (auth()->user()->role == 'doctor')
+                                    <a href="{{ route('docprofile') }}" class="menu-link px-5">My Profile</a>
+                                @elseif(auth()->user()->role == 'admin')
+                                    <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
+                                @else
+                                    <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
+                                @endif
+
                             </div>
                             <!--end::Menu item-->
                             <!--begin::Menu item-->

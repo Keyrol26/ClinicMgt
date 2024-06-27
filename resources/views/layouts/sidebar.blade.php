@@ -7,14 +7,14 @@
     <div class="aside-logo flex-column-auto" id="kt_aside_logo">
         <!--begin::Logo-->
         @if (Auth::user()->role == 'doctor')
-            <a href="{{ route('doctor.home') }}"><img alt="Logo" src="{{ asset('metronic/assets/media/db-logo-nobg.png') }}"
-                    class="h-100px logo" /></a>
+            <a href="{{ route('doctor.home') }}"><img alt="Logo"
+                    src="{{ asset('metronic/assets/media/db-logo-nobg.png') }}" class="h-100px logo" /></a>
         @elseif(Auth::user()->role == 'admin')
-            <a href="{{ route('doctor.home') }}"><img alt="Logo" src="{{ asset('metronic/assets/media/db-logo-nobg.png') }}"
-                    class="h-100px logo" /></a>
+            <a href="{{ route('doctor.home') }}"><img alt="Logo"
+                    src="{{ asset('metronic/assets/media/db-logo-nobg.png') }}" class="h-100px logo" /></a>
         @else
-            <a href="{{ route('userindex') }}"><img alt="Logo" src="{{ asset('metronic/assets/media/db-logo-nobg.png') }}"
-                    class="h-100px logo" /></a>
+            <a href="{{ route('userindex') }}"><img alt="Logo"
+                    src="{{ asset('metronic/assets/media/db-logo-nobg.png') }}" class="h-100px logo" /></a>
         @endif
 
 
@@ -147,8 +147,8 @@
                                 </a>
                             </div>
                             <div class="menu-item">
-                                <a class="menu-link {{ Route::is('booking-form') ? 'active' : '' }}"
-                                href="{{ route('booking-form') }}">
+                                <a class="menu-link {{ Route::is('approvedapptdoc') ? 'active' : '' }}"
+                                    href="{{ route('approvedapptdoc') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -156,8 +156,8 @@
                                 </a>
                             </div>
                             <div class="menu-item">
-                                <a class="menu-link {{ Route::is('booking-form') ? 'active' : '' }}"
-                                    href="{{ route('booking-form') }}">
+                                <a class="menu-link {{ Route::is('cancelapptdoc') ? 'active' : '' }}"
+                                    href="{{ route('cancelapptdoc') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -165,8 +165,8 @@
                                 </a>
                             </div>
                             <div class="menu-item">
-                                <a class="menu-link {{ Route::is('booking-form') ? 'active' : '' }}"
-                                    href="{{ route('booking-form') }}">
+                                <a class="menu-link {{ Route::is('allapptdoc') ? 'active' : '' }}"
+                                    href="{{ route('allapptdoc') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -174,8 +174,8 @@
                                 </a>
                             </div>
                             <div class="menu-item">
-                                <a class="menu-link {{ Route::is('booking-form') ? 'active' : '' }}"
-                                    href="{{ route('booking-form') }}">
+                                <a class="menu-link {{ Route::is('patientlistdoc') ? 'active' : '' }}"
+                                    href="{{ route('patientlistdoc') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -217,7 +217,7 @@
                                     <span class="menu-title">All Appoinment</span>
                                 </a>
                             </div>
-                            
+
                             <!--end::Admin Side-->
                         @else
                             <!--begin::User Side-->
@@ -254,7 +254,7 @@
                 </div>
                 <!--end::Appointment Side-->
 
-                
+
 
                 <!--begin::Profile Side-->
                 <div class="menu-item">
@@ -281,28 +281,76 @@
                         <span class="menu-title">Profile</span>
                         <span class="menu-arrow"></span>
                     </span>
-                    <div class="menu-sub menu-sub-accordion menu-active-bg">
-                        <div class="menu-item">
-                            <a class="menu-link {{ Route::is('profile') ? 'active' : '' }}"
-                                href="{{ route('profile') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Overview</span>
-                            </a>
+                    @if (Auth::user()->role == 'doctor')
+                        <div class="menu-sub menu-sub-accordion menu-active-bg">
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('docprofile') ? 'active' : '' }}"
+                                    href="{{ route('docprofile') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Overview</span>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="menu-sub menu-sub-accordion menu-active-bg">
-                        <div class="menu-item">
-                            <a class="menu-link {{ Route::is('usersetting') ? 'active' : '' }}"
-                                href="{{ route('usersetting') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Setting</span>
-                            </a>
+                        <div class="menu-sub menu-sub-accordion menu-active-bg">
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('docsetting') ? 'active' : '' }}"
+                                    href="{{ route('docsetting') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Setting</span>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @elseif (Auth::user()->role == 'admin')
+                        <div class="menu-sub menu-sub-accordion menu-active-bg">
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('profile') ? 'active' : '' }}"
+                                    href="{{ route('profile') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Overview</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="menu-sub menu-sub-accordion menu-active-bg">
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('usersetting') ? 'active' : '' }}"
+                                    href="{{ route('usersetting') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Setting</span>
+                                </a>
+                            </div>
+                        </div>
+                    @else
+                        <div class="menu-sub menu-sub-accordion menu-active-bg">
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('profile') ? 'active' : '' }}"
+                                    href="{{ route('profile') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Overview</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="menu-sub menu-sub-accordion menu-active-bg">
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('usersetting') ? 'active' : '' }}"
+                                    href="{{ route('usersetting') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Setting</span>
+                                </a>
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <!--end::Profile Side-->
 
@@ -391,23 +439,26 @@
     </div>
     <!--end::Aside menu-->
     <!--begin::Footer-->
-    <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
-        <a href="{{ route('booking-form') }}" class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip"
-            data-bs-trigger="hover" data-bs-dismiss-="click" title="Set Your Appointment With Doctor Now!!">
-            <span class="btn-label">Booking Appointment</span>
-            <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
-            <span class="svg-icon btn-icon svg-icon-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                    fill="none">
-                    <path opacity="0.3"
-                        d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM15 17C15 16.4 14.6 16 14 16H8C7.4 16 7 16.4 7 17C7 17.6 7.4 18 8 18H14C14.6 18 15 17.6 15 17ZM17 12C17 11.4 16.6 11 16 11H8C7.4 11 7 11.4 7 12C7 12.6 7.4 13 8 13H16C16.6 13 17 12.6 17 12ZM17 7C17 6.4 16.6 6 16 6H8C7.4 6 7 6.4 7 7C7 7.6 7.4 8 8 8H16C16.6 8 17 7.6 17 7Z"
-                        fill="black" />
-                    <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="black" />
-                </svg>
-            </span>
-            <!--end::Svg Icon-->
-        </a>
-    </div>
+    @if (Auth::user()->role == 'user')
+        <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
+            <a href="{{ route('booking-form') }}" class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip"
+                data-bs-trigger="hover" data-bs-dismiss-="click" title="Set Your Appointment With Doctor Now!!">
+                <span class="btn-label">Booking Appointment</span>
+                <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
+                <span class="svg-icon btn-icon svg-icon-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none">
+                        <path opacity="0.3"
+                            d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM15 17C15 16.4 14.6 16 14 16H8C7.4 16 7 16.4 7 17C7 17.6 7.4 18 8 18H14C14.6 18 15 17.6 15 17ZM17 12C17 11.4 16.6 11 16 11H8C7.4 11 7 11.4 7 12C7 12.6 7.4 13 8 13H16C16.6 13 17 12.6 17 12ZM17 7C17 6.4 16.6 6 16 6H8C7.4 6 7 6.4 7 7C7 7.6 7.4 8 8 8H16C16.6 8 17 7.6 17 7Z"
+                            fill="black" />
+                        <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="black" />
+                    </svg>
+                </span>
+                <!--end::Svg Icon-->
+            </a>
+        </div>
+    @endif
+
     <!--end::Footer-->
 </div>
 <!--end::Aside-->

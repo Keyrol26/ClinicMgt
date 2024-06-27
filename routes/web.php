@@ -48,10 +48,39 @@ Route::middleware(['auth', 'user-role:user'])->group(function () {
 // Route Doctor
 Route::middleware(['auth', 'user-role:doctor'])->group(function () {
     Route::get("/doctor/home", [DoctorController::class, 'doctorHome'])->name("doctor.home");
+    //new appt page
     Route::get("/doctor/newappt", [DoctorController::class, 'newapptdoc'])->name("newapptdoc");
+    Route::get("/doctor/newappt/search", [DoctorController::class, 'searchnewapptdoc'])->name("searchnewapptdoc");
+
+    //approved appt page
+    Route::get("/doctor/approvedappt", [DoctorController::class, 'approvedapptdoc'])->name("approvedapptdoc");
+    Route::get("/doctor/approvedappt/search", [DoctorController::class, 'searchapprovedapptdoc'])->name("searchapprovedapptdoc");
+
+    //Cancel appt page
+    Route::get("/doctor/cancelappt", [DoctorController::class, 'cancelapptdoc'])->name("cancelapptdoc");
+    Route::get("/doctor/cancelappt/search", [DoctorController::class, 'searchcancelapptdoc'])->name("searchcancelapptdoc");
+
+    //All appt page
+    Route::get("/doctor/allappt", [DoctorController::class, 'allapptdoc'])->name("allapptdoc");
+    Route::get("/doctor/allappt/search", [DoctorController::class, 'searchallapptdoc'])->name("searchallapptdoc");
+
+    //All appt page
+    Route::get("/doctor/patientlist", [DoctorController::class, 'patientlistdoc'])->name("patientlistdoc");
+    Route::get("/doctor/patientlist/search", [DoctorController::class, 'searchpatientlistdoc'])->name("searchpatientlistdoc");
+
+    //Appt Details
     Route::get('/detail-appointment/{id}/{aptnum}', [DoctorController::class, 'show'])->name('detailAppointment.show');
     Route::put('/appointment/{id}', [DoctorController::class, 'update'])->name('appointment.update');
+    Route::put('/appointment-report/{id}', [DoctorController::class, 'reportupdate'])->name('appointmentreport.update');
 
+    //Profile
+    Route::get("/doctor/profile", [DoctorController::class, 'profile'])->name("docprofile");
+    Route::get("/doctor/profile-setting", [DoctorController::class, 'docsetting'])->name("docsetting");
+    Route::put('/doctor/profile-setting/{id}', [DoctorController::class, 'docupdate'])->name('docprofile.update');
+    Route::get("/doctor/profile-security", [DoctorController::class, 'docpass'])->name("docpass");
+    Route::put('/doctor/profile-security/{id}', [DoctorController::class, 'docpassupdate'])->name('docpass.update');
+
+    
 });
 // Route Admin
 Route::middleware(['auth', 'user-role:admin'])->group(function () {

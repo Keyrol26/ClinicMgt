@@ -31,13 +31,13 @@
                     <!--end::Title-->
                 </div>
                 <!--end::Page title-->
-                <!--begin::Actions-->
+                {{-- <!--begin::Actions-->
                 <div class="d-flex align-items-center py-1">
                     <!--begin::Button-->
                     <a href="/booking-apt" class="btn btn-sm btn-primary">Create</a>
                     <!--end::Button-->
                 </div>
-                <!--end::Actions-->
+                <!--end::Actions--> --}}
             </div>
             <!--end::Container-->
         </div>
@@ -55,11 +55,11 @@
                             <div class="me-7 mb-4">
                                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                                     @if (auth()->user()->role == 'doctor')
-                                        <img src="metronic/assets/media/avatars/doctor.svg" alt="image" />
+                                        <img src="{{ asset('metronic/assets/media/avatars/doctor.svg') }}" alt="image" />
                                     @elseif(auth()->user()->role == 'admin')
-                                        <img src="metronic/assets/media/avatars/admin.png" alt="image" />
+                                        <img src="{{ asset('metronic/assets/media/avatars/admin.png') }}" alt="image" />
                                     @else
-                                        <img src="metronic/assets/media/avatars/boy.svg" alt="image" />
+                                        <img src="{{ asset('metronic/assets/media/avatars/boy.svg') }}" alt="image" />
                                     @endif
                                     <div
                                         class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
@@ -131,6 +131,10 @@
                                                 <!--end::Svg Icon-->{{ Auth::user()->email }}</a>
                                         </div>
                                         <!--end::Info-->
+                                        <a
+                                            class="text-gray-500 fs-2 fw-bolder me-1 ">{{ Auth::user()->doctor->specialization->specialization }}</a>
+                                        <a
+                                            class="d-flex align-items-center text-gray-400 mb-2">{{ Auth::user()->doctor->qualification }}</a>
                                     </div>
                                     <!--end::User-->
                                 </div>
@@ -144,13 +148,19 @@
                             <!--begin::Nav item-->
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 active"
-                                    href="{{ route('profile') }}">Overview</a>
+                                    href="{{ route('docprofile') }}">Overview</a>
                             </li>
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5"
-                                    href="{{ route('usersetting') }}">Settings</a>
+                                    href="{{ route('docsetting') }}">Settings</a>
+                            </li>
+                            <!--end::Nav item-->
+                            <!--begin::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5"
+                                    href="{{ route('docpass') }}">Security</a>
                             </li>
                             <!--end::Nav item-->
                         </ul>
@@ -168,7 +178,7 @@
                         </div>
                         <!--end::Card title-->
                         <!--begin::Action-->
-                        <a href="{{ route('usersetting') }}" class="btn btn-primary align-self-center">Edit
+                        <a href="{{ route('docsetting') }}" class="btn btn-primary align-self-center">Edit
                             Profile</a>
                         <!--end::Action-->
                     </div>
@@ -183,6 +193,31 @@
                             <!--begin::Col-->
                             <div class="col-lg-8">
                                 <span class="fw-bolder fs-6 text-gray-800">{{ Auth::user()->name }}</span>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Row-->
+                        <!--begin::Row-->
+                        <div class="row mb-7">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 fw-bold text-muted">Specialization</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8">
+                                <span
+                                    class="fw-bolder fs-6 text-gray-800">{{ Auth::user()->doctor->specialization->specialization }}</span>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Row-->
+                        <!--begin::Row-->
+                        <div class="row mb-7">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 fw-bold text-muted">Qualification</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8">
+                                <span class="fw-bolder fs-6 text-gray-800">{{ Auth::user()->doctor->qualification }}</span>
                             </div>
                             <!--end::Col-->
                         </div>
@@ -206,7 +241,7 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8 d-flex align-items-center">
-                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{ Auth::user()->patient->phoneno }}</span>
+                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{ Auth::user()->doctor->phoneno }}</span>
                             </div>
                             <!--end::Col-->
                         </div>
@@ -218,7 +253,7 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                <span class="fw-bolder fs-6 text-gray-800">{{ Auth::user()->patient->address }}</span>
+                                <span class="fw-bolder fs-6 text-gray-800">{{ Auth::user()->doctor->address }}</span>
                             </div>
                             <!--end::Col-->
                         </div>
@@ -230,7 +265,7 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                @if (Auth::user()->patient->gender == 'm')
+                                @if (Auth::user()->doctor->gender == 'm')
                                     <span class="fw-bolder fs-6 text-gray-800">Male</span>
                                 @elseif (Auth::user()->doctor->gender == 'f')
                                     <span class="fw-bolder fs-6 text-gray-800">Female</span>
@@ -248,7 +283,7 @@
                             <!--begin::Col-->
                             <div class="col-lg-8">
                                 <span
-                                    class="fw-bolder fs-6 text-gray-800">{{ Carbon::parse(Auth::user()->patient->dob)->format('d F') }}</span>
+                                    class="fw-bolder fs-6 text-gray-800">{{ Carbon::parse(Auth::user()->doctor->dob)->format('d F') }}</span>
                             </div>
                             <!--end::Col-->
                         </div>
@@ -261,7 +296,7 @@
                             <!--begin::Col-->
                             <div class="col-lg-8">
                                 <span
-                                    class="fw-bolder fs-6 text-gray-800">{{ Carbon::parse(Auth::user()->patient->created_at)->format('d F, Y') }}</span>
+                                    class="fw-bolder fs-6 text-gray-800">{{ Carbon::parse(Auth::user()->doctor->created_at)->format('d F, Y') }}</span>
                             </div>
                             <!--end::Col-->
                         </div>

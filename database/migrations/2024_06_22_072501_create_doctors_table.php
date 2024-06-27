@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('specialization_id');
+            $table->text('address')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('phoneno')->nullable()->limit(10);
+            $table->date('dob')->nullable();
+            $table->text('qualification')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

@@ -157,7 +157,6 @@ class PatientController extends Controller
     {
         $id = Auth::user()->patient->id;
 
-
         $profile = Patient::with('user')
             ->where('user_id', $id)
             ->get();

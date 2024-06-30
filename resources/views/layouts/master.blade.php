@@ -4,8 +4,8 @@
 
 <head>
     <base href="">
-    <title>Metronic</title>
-    <link rel="shortcut icon" href="{{ URL::asset('metronic/assets/media/logos/favicon.ico') }}">
+    <title>Addicure</title>
+    <link rel="shortcut icon" href="{{ asset('metronic/assets/media/blue-logo-nobg.jpg') }}" />
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->
@@ -36,7 +36,6 @@
                 @include('layouts.header')
                 <!--end::Header-->
                 <!--begin::Content-->
-                {{-- @include('layouts.content') --}}
                 @yield('content')
                 <!--end::Content-->
                 <!--begin::Footer-->
@@ -58,14 +57,14 @@
     @include('global.js')
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Vendors Javascript(used by this page)-->
-    <script type="text/javascript"
-        src="{{ URL::asset('metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
+    {{-- <script type="text/javascript"
+        src="{{ URL::asset('metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script> --}}
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script type="text/javascript" src="{{ URL::asset('metronic/assets/js/custom/widgets.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('metronic/assets/js/custom/apps/chat/chat.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ URL::asset('metronic/assets/js/custom/widgets.js') }}"></script> --}}
+    {{-- <script type="text/javascript" src="{{ URL::asset('metronic/assets/js/custom/apps/chat/chat.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('metronic/assets/js/custom/modals/create-app.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('metronic/assets/js/custom/modals/upgrade-plan.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('metronic/assets/js/custom/modals/upgrade-plan.js') }}"></script> --}}
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
 </body>

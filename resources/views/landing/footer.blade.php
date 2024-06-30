@@ -21,21 +21,9 @@
                         <!--end::Title-->
                         <!--begin::Text-->
                         <span class="fw-normal fs-4 text-gray-700">Email us to
-                        <a href="" class="text-white opacity-50 text-hover-primary">iseatcs@gmail.com</a></span>
+                        <a href="" class="text-white opacity-50 text-hover-primary">addicurecs@gmail.com</a></span>
                         <!--end::Text-->
                     </div>
-                    <!--end::Block-->
-                    {{-- <!--begin::Block-->
-                    <div class="rounded landing-dark-border p-9">
-                        <!--begin::Title-->
-                        <h2 class="text-white">How About a Custom Project?</h2>
-                        <!--end::Title-->
-                        <!--begin::Text-->
-                        <span class="fw-normal fs-4 text-gray-700">Use Our Custom Development Service.
-                        <a href="../../demo2/dist/pages/profile/overview.html" class="text-white opacity-50 text-hover-primary">Click to Get a Quote</a></span>
-                        <!--end::Text-->
-                    </div>
-                    <!--end::Block--> --}}
                 </div>
                 <!--end::Col-->
                 <!--begin::Col-->
@@ -44,9 +32,6 @@
                     <div class="d-flex justify-content-center">
                         <!--begin::Links-->
                         <div class="d-flex fw-bold flex-column me-20">
-                            <!--begin::Subtitle-->
-                            <h4 class="fw-bolder text-gray-400 mb-6">More for Metronic</h4>
-                            <!--end::Subtitle-->
                             <!--begin::Link-->
                             <a href="#" class="text-white opacity-50 text-hover-primary fs-5 mb-6">FAQ</a>
                             <!--end::Link-->
@@ -102,7 +87,7 @@
                 <div class="d-flex align-items-center order-2 order-md-1">
                     <!--begin::Logo-->
                     <a href="/">
-                        <img alt="Logo"  src="{{ URL::asset('metronic/assets/media/iSeat/bus-stop.png') }}" class="h-50px h-md-55px" />
+                        <img alt="Logo"  src="{{ URL::asset('metronic/assets/media/db-logo-nobg.png') }}" class="h-50px h-md-65px" />
                     </a>
                     <!--end::Logo image-->
                     <!--begin::Logo image-->

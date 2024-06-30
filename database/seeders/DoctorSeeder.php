@@ -52,8 +52,8 @@ class DoctorSeeder extends Seeder
 
         $faker = Faker::create();
 
-        // Create 10 doctor users
-        for ($i = 0; $i < 10; $i++) {
+        // Create 10 doctor 
+        for ($i = 0; $i < 15; $i++) {
             $user = User::create([
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
@@ -71,7 +71,8 @@ class DoctorSeeder extends Seeder
             }
         }
 
-        for ($i = 0; $i < 5; $i++) {
+        //user
+        for ($i = 0; $i < 15; $i++) {
             $user = User::create([
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,

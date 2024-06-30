@@ -10,7 +10,7 @@
             <a href="{{ route('doctor.home') }}"><img alt="Logo"
                     src="{{ asset('metronic/assets/media/db-logo-nobg.png') }}" class="h-100px logo" /></a>
         @elseif(Auth::user()->role == 'admin')
-            <a href="{{ route('doctor.home') }}"><img alt="Logo"
+            <a href="{{ route('admin.index') }}"><img alt="Logo"
                     src="{{ asset('metronic/assets/media/db-logo-nobg.png') }}" class="h-100px logo" /></a>
         @else
             <a href="{{ route('userindex') }}"><img alt="Logo"
@@ -60,8 +60,9 @@
                     @if (Auth::user()->role == 'doctor')
                         <a class="menu-link" href="{{ route('doctor.home') }}">
                         @elseif(Auth::user()->role == 'admin')
-                        @else
-                            <a class="menu-link" href="{{ route('userindex') }}">
+                            <a class="menu-link" href="{{ route('admin.index') }}">
+                            @else
+                                <a class="menu-link" href="{{ route('userindex') }}">
                     @endif
 
                     <span class="menu-icon">
@@ -165,6 +166,15 @@
                                 </a>
                             </div>
                             <div class="menu-item">
+                                <a class="menu-link {{ Route::is('rescheduledapptdoc') ? 'active' : '' }}"
+                                    href="{{ route('rescheduledapptdoc') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Rescheduled Appoinment</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
                                 <a class="menu-link {{ Route::is('allapptdoc') ? 'active' : '' }}"
                                     href="{{ route('allapptdoc') }}">
                                     <span class="menu-bullet">
@@ -186,7 +196,8 @@
                         @elseif (Auth::user()->role == 'admin')
                             <!--begin::Admin Side-->
                             <div class="menu-item">
-                                <a class="menu-link" href="../../demo1/dist/apps/customers/getting-started.html">
+                                <a class="menu-link {{ Route::is('admin.newapptdoc') ? 'active' : '' }}"
+                                    href="{{ route('admin.newapptdoc') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -194,7 +205,8 @@
                                 </a>
                             </div>
                             <div class="menu-item">
-                                <a class="menu-link" href="../../demo1/dist/apps/customers/list.html">
+                                <a class="menu-link {{ Route::is('admin.approvedapptdoc') ? 'active' : '' }}"
+                                    href="{{ route('admin.approvedapptdoc') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -202,7 +214,8 @@
                                 </a>
                             </div>
                             <div class="menu-item">
-                                <a class="menu-link" href="../../demo1/dist/apps/customers/list.html">
+                                <a class="menu-link {{ Route::is('admin.cancelapptdoc') ? 'active' : '' }}"
+                                    href="{{ route('admin.cancelapptdoc') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -210,7 +223,17 @@
                                 </a>
                             </div>
                             <div class="menu-item">
-                                <a class="menu-link" href="../../demo1/dist/apps/customers/list.html">
+                                <a class="menu-link {{ Route::is('admin.resdapptdoc') ? 'active' : '' }}"
+                                    href="{{ route('admin.resdapptdoc') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Rescheduled Appoinment</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('admin.allapptdoc') ? 'active' : '' }}"
+                                    href="{{ route('admin.allapptdoc') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -237,6 +260,15 @@
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                     <span class="menu-title">Appoinment History</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link {{ Route::is('resdapptdoc') ? 'active' : '' }}"
+                                    href="{{ route('rescheduledlist') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Rescheduled Appoinment</span>
                                 </a>
                             </div>
                             <div class="menu-item">
@@ -307,8 +339,8 @@
                     @elseif (Auth::user()->role == 'admin')
                         <div class="menu-sub menu-sub-accordion menu-active-bg">
                             <div class="menu-item">
-                                <a class="menu-link {{ Route::is('profile') ? 'active' : '' }}"
-                                    href="{{ route('profile') }}">
+                                <a class="menu-link {{ Route::is('adminprofile') ? 'active' : '' }}"
+                                    href="{{ route('adminprofile') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -318,8 +350,8 @@
                         </div>
                         <div class="menu-sub menu-sub-accordion menu-active-bg">
                             <div class="menu-item">
-                                <a class="menu-link {{ Route::is('usersetting') ? 'active' : '' }}"
-                                    href="{{ route('usersetting') }}">
+                                <a class="menu-link {{ Route::is('adminsetting') ? 'active' : '' }}"
+                                    href="{{ route('adminsetting') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -392,8 +424,8 @@
                                 </span>
                                 <div class="menu-sub menu-sub-accordion">
                                     <div class="menu-item">
-                                        <a class="menu-link"
-                                            href="../../demo1/dist/apps/user-management/users/list.html">
+                                        <a class="menu-link {{ Route::is('admin.patientlistdoc') ? 'active' : '' }}"
+                                            href="{{ route('admin.patientlistdoc') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -412,11 +444,11 @@
                                 </span>
                                 <div class="menu-sub menu-sub-accordion">
                                     <div class="menu-item">
-                                        <a class="menu-link"
-                                            href="../../demo1/dist/apps/user-management/roles/list.html">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
+                                        <a class="menu-link {{ Route::is('admin.doclistdoc') ? 'active' : '' }}"
+                                        href="{{ route('admin.doclistdoc') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
                                             <span class="menu-title">Doctor List</span>
                                         </a>
                                     </div>

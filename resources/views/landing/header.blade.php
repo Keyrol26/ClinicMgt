@@ -31,10 +31,8 @@
                         <!--end::Mobile menu toggle-->
                         <!--begin::Logo image-->
                         <a href="/">
-                            <img alt="Logo"src="{{ URL::asset('metronic/assets/media/iSeat/iSeat.svg') }}"
+                            <img alt="Logo"src="{{ URL::asset('metronic/assets/media/db-logo-nobg.png') }}"
                                 class="logo-default h-150px h-lg-145px" />
-                            <img alt="Logo" src="{{ URL::asset('metronic/assets/media/iSeat/iSeat-black.svg') }}"
-                                class="logo-sticky h-105px h-lg-100px" />
                         </a>
                         <!--end::Logo image-->
                     </div>
@@ -82,12 +80,22 @@
                     <!--begin::Toolbar-->
                     @if (Route::has('login'))
                         @auth
-                            <div class="flex-equal text-end ms-1">
-                                <a href="" class="btn btn-primary">Home</a>
-                            </div>
+                            @if (Auth::user()->role == 'doctor')
+                                <div class="flex-equal text-end ms-1">
+                                    <a href="{{ route('doctor.home') }}" class="btn btn-primary">Home</a>
+                                </div>
+                            @elseif (Auth::user()->role == 'admin')
+                                <div class="flex-equal text-end ms-1">
+                                    <a href="{{ route('admin.index') }}" class="btn btn-primary">Home</a>
+                                </div>
+                            @else
+                                <div class="flex-equal text-end ms-1">
+                                    <a href="{{ route('userindex') }}" class="btn btn-primary">Home</a>
+                                </div>
+                            @endif
                         @else
                             <div class="flex-equal text-end ms-1">
-                                <a href="" class="btn btn-success">Sign In</a>
+                                <a href="{{ route('login') }}" class="btn btn-success">Sign In</a>
                             </div>
                         @endauth
                     @endif
@@ -103,77 +111,31 @@
             <!--begin::Heading-->
             <div class="text-center mb-5 mb-lg-10 py-10 py-lg-20">
                 <!--begin::Title-->
-                <h1 class="text-white lh-base fw-bolder fs-2x fs-lg-3x mb-15">Researve Your Seat
+                <h1 class="text-white lh-base fw-bolder fs-2x fs-lg-3x mb-15">Researve Your Appoinment
                     <br />with
                     <span
                         style="background: linear-gradient(to right, #d38826 0%, #f8e067 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
-                        <span id="kt_landing_hero_text">iSeat</span>
+                        <span id="kt_landing_hero_text">Addicure</span>
                     </span>
                 </h1>
                 <!--end::Title-->
                 <!--begin::Action-->
                 @if (Route::has('login'))
                     @auth
-                        <a href="" class="btn btn-primary">Try iSeat</a>
+                        @if (Auth::user()->role == 'doctor')
+                            <a href="{{ route('doctor.home') }}" class="btn btn-primary">Book Now!</a>
+                        @elseif (Auth::user()->role == 'admin')
+                            <a href="{{ route('admin.index') }}" class="btn btn-primary">Book Now!</a>
+                        @else
+                            <a href="{{ route('userindex') }}" class="btn btn-primary">Book Now!</a>
+                        @endif
                     @else
-                        <a href="" class="btn btn-success">Try iSeat</a>
+                        <a href="{{ route('login') }}" class="btn btn-success">Book Now!</a>
                     @endauth
                 @endif
                 <!--end::Action-->
             </div>
             <!--end::Heading-->
-            <!--begin::Clients-->
-            <div class="d-flex flex-center flex-wrap position-relative px-5">
-                <!--begin::Client-->
-                <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Fujifilm">
-                    <img src="{{ URL::asset('metronic/assets/media/svg/brand-logos/fujifilm.svg') }}"
-                        class="mh-30px mh-lg-40px" alt="" />
-                </div>
-                <!--end::Client-->
-                <!--begin::Client-->
-                <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Vodafone">
-                    <img src="{{ URL::asset('metronic/assets/media/svg/brand-logos/vodafone.svg') }}"
-                        class="mh-30px mh-lg-40px" alt="" />
-                </div>
-                <!--end::Client-->
-                <!--begin::Client-->
-                <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="KPMG International">
-                    <img src="{{ URL::asset('metronic/assets/media/svg/brand-logos/kpmg.svg') }}"
-                        class="mh-30px mh-lg-40px" alt="" />
-                </div>
-                <!--end::Client-->
-                <!--begin::Client-->
-                <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Nasa">
-                    <img src="{{ URL::asset('metronic/assets/media/svg/brand-logos/nasa.svg') }}"
-                        class="mh-30px mh-lg-40px" alt="" />
-                </div>
-                <!--end::Client-->
-                <!--begin::Client-->
-                <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Aspnetzero">
-                    <img src="{{ URL::asset('metronic/assets/media/svg/brand-logos/aspnetzero.svg') }}"
-                        class="mh-30px mh-lg-40px" alt="" />
-                </div>
-                <!--end::Client-->
-                <!--begin::Client-->
-                <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="AON - Empower Results">
-                    <img src="{{ URL::asset('metronic/assets/media/svg/brand-logos/aon.svg') }}"
-                        class="mh-30px mh-lg-40px" alt="" />
-                </div>
-                <!--end::Client-->
-                <!--begin::Client-->
-                <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Hewlett-Packard">
-                    <img src="{{ URL::asset('metronic/assets/media/svg/brand-logos/hp-3.svg') }}"
-                        class="mh-30px mh-lg-40px" alt="" />
-                </div>
-                <!--end::Client-->
-                <!--begin::Client-->
-                <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Truman">
-                    <img src="{{ URL::asset('metronic/assets/media/svg/brand-logos/truman.svg') }}"
-                        class="mh-30px mh-lg-40px" alt="" />
-                </div>
-                <!--end::Client-->
-            </div>
-            <!--end::Clients-->
         </div>
         <!--end::Landing hero-->
     </div>

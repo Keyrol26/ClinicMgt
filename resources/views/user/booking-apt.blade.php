@@ -1,114 +1,5 @@
-{{-- @extends('layouts.master')
-
-@section('content')
-    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-        <section class="section-padding" id="booking">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-8 col-12 mx-auto">
-                        <div class="booking-form">
-
-                            <h2 class="text-center mb-lg-3 mb-2">Book an appointment</h2>
-
-                            <form role="form" method="post" action="{{ route('appointment.booking') }}">
-                                @csrf
-                                @method('POST')
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <input type="text" name="Name" id="Name" class="form-control"
-                                            placeholder="Full name" required='true'>
-                                    </div>
-
-
-                                    <div class="col-lg-6 col-12">
-                                        <input type="date" name="AppointmentDate" id="AppointmentDate" value=""
-                                            class="form-control">
-
-                                    </div>
-
-                                    <div class="col-lg-6 col-12">
-                                        <select name="AppointmentTime" id="AppointmentTime" class="form-control" required>
-                                            <option value="">Select Appointment Time</option>
-                                            <!--- Fetching States--->
-                                            @foreach ($bookingtime as $bookingtime)
-                                                <option value="{{ $bookingtime->id }}">
-                                                    {{ $bookingtime->AppointmentTime }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="col-lg-10 col-12">
-                                        <select name="Specialization" id="Specialization" class="form-control" required>
-                                            <option value="">Select specialization</option>
-                                            <!--- Fetching States--->
-                                            @foreach ($Specializations as $specialization)
-                                                <option value="{{ $specialization->id }}">
-                                                    {{ $specialization->specialization }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="col-lg-6 col-12">
-                                        <select name="Doctor" id="Doctor" class="form-control">
-                                            <option value=''>Select Doctor</option>
-                                        </select>
-                                    </div>
-
-
-
-                                    <div class="col-12">
-                                        <textarea class="form-control" rows="5" id="Message" name="Message" placeholder="Additional Message"></textarea>
-                                    </div>
-
-                                    <div class="col-lg-3 col-md-4 col-6 mx-auto">
-                                        <button type="submit" class="form-control" name="submit" id="submit-button">Book
-                                            Now</button>
-                                    </div>
-                                </div>
-                            </form>
-
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("#Specialization").on('change', function() {
-                let id_specialization = $('#Specialization').val();
-
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('appointment.getDoctor') }}",
-                    data: {
-                        "id_special": id_specialization,
-                        '_token': '{{ csrf_token() }}'
-                    },
-                    cache: false,
-
-                    success: function(msg) {
-                        $('#Doctor').html(msg);
-                    },
-
-                    error: function(data) {
-                        console.log('error', data);
-                    },
-                })
-            });
-        });
-    </script>
-@endsection --}}
-
-
 @extends('layouts.master')
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <!--begin::Toolbar-->
@@ -162,10 +53,12 @@
                         <!--end::Card title-->
                     </div>
                     <!--begin::Card header-->
+
                     <!--begin::Content-->
                     <div id="kt_account_profile_details" class="collapse show">
                         <!--begin::Form-->
-                        <form class="form" role="form" method="post" action="{{ route('appointment.booking') }}">
+                        <form class="form" role="form" method="post" action="{{ route('appointment.booking') }}"
+                            id="booking-form">
                             @csrf
                             @method('POST')
                             <!--begin::Card body-->
@@ -180,6 +73,9 @@
                                         <input type="text" name="Name" id="Name"
                                             class="form-control form-control-lg form-control-solid" placeholder="Full name"
                                             value="" />
+                                        @error('name')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -194,6 +90,9 @@
                                         <input type="date" name="AppointmentDate" id="AppointmentDate"
                                             class="form-control form-control-lg form-control-solid"
                                             placeholder="Appointment Date" value="" />
+                                        @error('AppointmentDate')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -208,8 +107,9 @@
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8 fv-row">
-                                        <select name="AppointmentTime" id="AppointmentTime" aria-label="Select Appointment Time"
-                                            data-control="select2" data-placeholder="Select a appointment time..."
+                                        <select name="AppointmentTime" id="AppointmentTime"
+                                            aria-label="Select Appointment Time" data-control="select2"
+                                            data-placeholder="Select a appointment time..."
                                             class="form-select form-select-solid form-select-lg fw-bold">
                                             <option value="">Select Appointment Time</option>
                                             @foreach ($bookingtime as $bookingtime)
@@ -217,6 +117,9 @@
                                                     {{ $bookingtime->AppointmentTime }}
                                                 </option>
                                             @endforeach
+                                            @error('AppointmentTime')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </select>
                                     </div>
                                     <!--end::Col-->
@@ -241,6 +144,9 @@
                                                     {{ $specialization->specialization }}
                                                 </option>
                                             @endforeach
+                                            @error('Specialization')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </select>
                                     </div>
                                     <!--end::Col-->
@@ -260,6 +166,9 @@
                                             data-control="select2" data-placeholder="Select a doctor..."
                                             class="form-select form-select-solid form-select-lg fw-bold">
                                             <option value=''>Select Doctor</option>
+                                            @error('Doctor')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </select>
                                     </div>
                                     <!--end::Col-->
@@ -273,10 +182,13 @@
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8 fv-row">
-                                        <textarea name="Message" id="Message"
-                                            class="form-control form-control-lg form-control-solid" placeholder="Additional Message"
-                                            value="" ></textarea>
+                                        <textarea name="Message" id="Message" class="form-control form-control-lg form-control-solid"
+                                            placeholder="Additional Message" value=""></textarea>
+                                        @error('Message')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
+
                                     <!--end::Col-->
                                 </div>
                                 <!--end::Input group-->
@@ -284,8 +196,14 @@
                             <!--end::Card body-->
                             <!--begin::Actions-->
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
-                                <button type="submit" name="submit" id="submit-button" class="btn btn-primary">Submit</button>
+                                <button type="reset"
+                                    class="btn btn-light btn-active-light-primary me-2">Discard</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#exampleModal">
+                                    Next
+                                </button>
+                                <!-- Button trigger modal-->
+                                @include('user.modal.payment')
                             </div>
                             <!--end::Actions-->
                         </form>
@@ -297,6 +215,9 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {

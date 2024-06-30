@@ -26,7 +26,7 @@ class Doctor extends Model
 
     public function specialization()
     {
-        return $this->hasOne(Specialization::class, 'id');
+        return $this->belongsTo(Specialization::class, 'specialization_id');
     }
 
     public function appointment()

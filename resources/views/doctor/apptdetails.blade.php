@@ -85,9 +85,12 @@
                                                 @if ($appointment->Status == 'Approved')
                                                     : Appointment has been approved
                                                 @endif
-
+                                                
                                                 @if ($appointment->Status == 'Cancelled')
                                                     : Appointment has been cancelled
+                                                @endif
+                                                @if ($appointment->Status == 'Rescheduled')
+                                                    : Appointment need to rescheduled
                                                 @endif
                                             </td>
                                         </tr>
@@ -120,7 +123,7 @@
                                         </tr>
                                     </table>
                                     <!--end::Table-->
-                                    @if ($appointment->Status == '')
+                                    @if ($appointment->Status == '' or $appointment->Status == 'Rescheduled')
                                         <p align="center" style="padding-top: 20px">
                                             <button class="btn btn-primary waves-effect waves-light w-lg"
                                                 data-toggle="modal" data-target="#statusmodal">Take Action</button>
@@ -148,6 +151,5 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> --}}
-    {{-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> --}}
+    
 @endsection

@@ -54,12 +54,21 @@
                             <!--begin: Pic-->
                             <div class="me-7 mb-4">
                                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                    @if (auth()->user()->role == 'doctor')
-                                        <img src="metronic/assets/media/avatars/doctor.svg" alt="image" />
+                                    @if (auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == 'm')
+                                        <img src="{{ asset('metronic/assets/media/avatars/doctor.svg') }}" alt="user" />
+                                    @elseif(auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == 'f')
+                                        <img src="{{ asset('metronic/assets/media/avatars/fdoctor.svg') }}"
+                                            alt="user" />
+                                    @elseif(auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == '')
+                                        <img src="{{ asset('metronic/assets/media/avatars/blank.png') }}" alt="user" />
                                     @elseif(auth()->user()->role == 'admin')
-                                        <img src="metronic/assets/media/avatars/admin.png" alt="image" />
-                                    @else
-                                        <img src="metronic/assets/media/avatars/boy.svg" alt="image" />
+                                        <img src="{{ asset('metronic/assets/media/avatars/admin.png') }}" alt="user" />
+                                    @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == 'm')
+                                        <img src="{{ asset('metronic/assets/media/avatars/boy.svg') }}" alt="user" />
+                                    @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == 'f')
+                                        <img src="{{ asset('metronic/assets/media/avatars/girl.svg') }}" alt="user" />
+                                    @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == '')
+                                        <img src="{{ asset('metronic/assets/media/avatars/blank.png') }}" alt="user" />
                                     @endif
                                     <div
                                         class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
@@ -153,6 +162,12 @@
                                     href="{{ route('usersetting') }}">Settings</a>
                             </li>
                             <!--end::Nav item-->
+                            <!--begin::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5"
+                                    href="{{ route('usersecurity') }}">Security</a>
+                            </li>
+                            <!--end::Nav item-->
                         </ul>
                         <!--begin::Navs-->
                     </div>
@@ -192,24 +207,13 @@
                                                 <input type="text" name="Name"
                                                     class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                     placeholder="Full name" value="{{ Auth::user()->name }}" />
+                                                @error('Name')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <!--end::Col-->
                                         </div>
                                         <!--end::Row-->
-                                    </div>
-                                    <!--end::Col-->
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="row mb-6">
-                                    <!--begin::Label-->
-                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">Email</label>
-                                    <!--end::Label-->
-                                    <!--begin::Col-->
-                                    <div class="col-lg-8 fv-row">
-                                        <input type="text" name="email"
-                                            class="form-control form-control-lg form-control-solid" placeholder="Email"
-                                            value="{{ Auth::user()->email }}" />
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -226,6 +230,9 @@
                                         <input type="tel" name="phoneno"
                                             class="form-control form-control-lg form-control-solid"
                                             placeholder="Phone number" value="{{ Auth::user()->patient->phoneno }}" />
+                                        @error('phoneno')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -239,6 +246,9 @@
                                     <div class="col-lg-8 fv-row">
                                         <textarea type="text" name="address" class="form-control form-control-lg form-control-solid"
                                             placeholder="Address">{{ Auth::user()->patient->address }}</textarea>
+                                        @error('address')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -263,6 +273,9 @@
                                             <option value="f"
                                                 {{ Auth::user()->patient->gender == 'f' ? 'selected' : '' }}>
                                                 Female</option>
+                                            @error('gender')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </select>
                                     </div>
                                     <!--end::Col-->
@@ -277,6 +290,9 @@
                                         <input type="date" name="dob"
                                             class="form-control form-control-lg form-control-solid" placeholder="Birthday"
                                             value="{{ \Carbon\Carbon::parse(Auth::user()->patient->dob)->format('Y-m-d') }}" />
+                                        @error('dob')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <!--end::Input group-->

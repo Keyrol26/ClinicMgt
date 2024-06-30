@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Hash;
+use App\Rules\DifferentEmail;
+
 class DoctorController extends Controller
 {
     public function doctorHome()
@@ -108,12 +110,14 @@ class DoctorController extends Controller
                     ->paginate(10);
             }
 
-            $total_row = $data->count();
-            $rowCount = 1;
+            $total_row = $data->total();
+            $current_page = $data->currentPage();
+            $per_page = $data->perPage();
 
             $output = '';
             if ($total_row > 0) {
-                foreach ($data as $row) {
+                foreach ($data as $index => $row) {
+                    $rowCount = ($current_page - 1) * $per_page + $index + 1;
                     $output .= '
                 <tr>
                     <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . $rowCount . '</a></td>
@@ -184,12 +188,14 @@ class DoctorController extends Controller
                     ->paginate(10);
             }
 
-            $total_row = $data->count();
-            $rowCount = 1;
+            $total_row = $data->total();
+            $current_page = $data->currentPage();
+            $per_page = $data->perPage();
 
             $output = '';
             if ($total_row > 0) {
-                foreach ($data as $row) {
+                foreach ($data as $index => $row) {
+                    $rowCount = ($current_page - 1) * $per_page + $index + 1;
                     $output .= '
                 <tr>
                     <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . $rowCount . '</a></td>
@@ -260,12 +266,14 @@ class DoctorController extends Controller
                     ->paginate(10);
             }
 
-            $total_row = $data->count();
-            $rowCount = 1;
+            $total_row = $data->total();
+            $current_page = $data->currentPage();
+            $per_page = $data->perPage();
 
             $output = '';
             if ($total_row > 0) {
-                foreach ($data as $row) {
+                foreach ($data as $index => $row) {
+                    $rowCount = ($current_page - 1) * $per_page + $index + 1;
                     $output .= '
                 <tr>
                     <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . $rowCount . '</a></td>
@@ -275,6 +283,90 @@ class DoctorController extends Controller
                     <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . $row->bookingTime->AppointmentTime . '</a></td>
                     <td>' . ($row->Status == 'Approved' ? '<span class="badge badge-light-success fs-8 fw-bolder my-2">Approved</span>' : ($row->Status == 'Cancelled' ? '<span class="badge badge-light-danger fs-8 fw-bolder my-2">Rejected</span>' : '<span class="badge badge-light-warning fs-8 fw-bolder my-2">In Progress</span>')) . '</td>
                     <td>
+                        <div class="d-flex justify-content-end flex-shrink-0">
+                            <a href="' . route('detailAppointment.show', [$row->id, $row->AppointmentNumber]) . '" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                <span class="svg-icon svg-icon-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="black" />
+                                        <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="black" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>';
+                    $rowCount++;
+                }
+            } else {
+                $output = '
+            <tr>
+                <td align="center" colspan="7">No Data Found</td>
+            </tr>';
+            }
+
+            return response()->json(['table_data' => $output, 'pagination' => (string) $data->links('vendor.pagination.bootstrap-4')]);
+        }
+    }
+
+
+    //Reschedule Appt
+    public function rescheduledapptdoc()
+    {
+        return view('doctor.resappt');
+    }
+    public function searchrescheduledapptdoc(Request $request)
+    {
+        if ($request->ajax()) {
+            $query = $request->get('query');
+            if ($query != '') {
+                $data = Appointment::with('patient', 'doctor', 'bookingTime')
+                    ->where('doctor_id', Auth::user()->doctor->id)
+                    ->where('Status', "like", 'Rescheduled')
+                    ->when($query, function ($query, $search) {
+                        return $query->where(function ($query) use ($search) {
+                            $query
+                                ->orWhereHas('bookingTime', function ($query) use ($search) {
+                                    $query->where('AppointmentTime', 'like', "%{$search}%");
+                                })
+                                ->orWhere('appointments.AppointmentDate', 'like', "%{$search}%")
+                                ->orWhere('appointments.AppointmentNumber', 'like', "%{$search}%")
+                                ->orWhere('appointments.name', 'like', "%{$search}%");
+                        });
+                    })
+                    ->orderBy('appointments.AppointmentDate')
+                    ->orderBy('AppointmentTime_id')
+                    ->paginate(10);
+            } else {
+                $data = Appointment::with('patient', 'doctor', 'bookingTime')
+                    ->where('doctor_id', Auth::user()->doctor->id)
+                    ->where('Status', "like", 'Rescheduled')
+                    ->orderBy('appointments.AppointmentDate')
+                    ->orderBy('AppointmentTime_id')
+                    ->paginate(10);
+            }
+
+            $total_row = $data->total();
+            $current_page = $data->currentPage();
+            $per_page = $data->perPage();
+
+            $output = '';
+            if ($total_row > 0) {
+                foreach ($data as $index => $row) {
+                    $rowCount = ($current_page - 1) * $per_page + $index + 1;
+                    $output .= '
+                <tr>
+                    <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . $rowCount . '</a></td>
+                    <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . $row->AppointmentNumber . '</a></td>
+                    <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . $row->name . '</a></td>
+                    <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . date('d-m-Y', strtotime($row->AppointmentDate)) . '</a></td>
+                    <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . $row->bookingTime->AppointmentTime . '</a></td>
+                    <td>' . (
+                        $row->Status == 'Approved' ? '<span class="badge badge-light-success fs-8 fw-bolder my-2">Approved</span>' :
+                        ($row->Status == 'Cancelled' ? '<span class="badge badge-light-danger fs-8 fw-bolder my-2">Rejected</span>' :
+                            ($row->Status == 'Rescheduled' ? '<span class="badge badge-danger fs-8 fw-bolder my-2">Rescheduled</span>' :
+                                '<span class="badge badge-light-warning fs-8 fw-bolder my-2">In Progress</span>')
+                        )
+                    ) . '</td><td> 
                         <div class="d-flex justify-content-end flex-shrink-0">
                             <a href="' . route('detailAppointment.show', [$row->id, $row->AppointmentNumber]) . '" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                 <span class="svg-icon svg-icon-3">
@@ -334,12 +426,14 @@ class DoctorController extends Controller
                     ->paginate(10);
             }
 
-            $total_row = $data->count();
-            $rowCount = 1;
+            $total_row = $data->total();
+            $current_page = $data->currentPage();
+            $per_page = $data->perPage();
 
             $output = '';
             if ($total_row > 0) {
-                foreach ($data as $row) {
+                foreach ($data as $index => $row) {
+                    $rowCount = ($current_page - 1) * $per_page + $index + 1;
                     $output .= '
                 <tr>
                     <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . $rowCount . '</a></td>
@@ -347,8 +441,13 @@ class DoctorController extends Controller
                     <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . $row->name . '</a></td>
                     <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . date('d-m-Y', strtotime($row->AppointmentDate)) . '</a></td>
                     <td><a class="text-dark fw-bolder text-hover-primary d-block fs-6">' . $row->bookingTime->AppointmentTime . '</a></td>
-                    <td>' . ($row->Status == 'Approved' ? '<span class="badge badge-light-success fs-8 fw-bolder my-2">Approved</span>' : ($row->Status == 'Cancelled' ? '<span class="badge badge-light-danger fs-8 fw-bolder my-2">Rejected</span>' : '<span class="badge badge-light-warning fs-8 fw-bolder my-2">In Progress</span>')) . '</td>
-                    <td>
+                    <td>' . (
+                        $row->Status == 'Approved' ? '<span class="badge badge-light-success fs-8 fw-bolder my-2">Approved</span>' :
+                        ($row->Status == 'Cancelled' ? '<span class="badge badge-light-danger fs-8 fw-bolder my-2">Rejected</span>' :
+                            ($row->Status == 'Rescheduled' ? '<span class="badge badge-danger fs-8 fw-bolder my-2">Rescheduled</span>' :
+                                '<span class="badge badge-light-warning fs-8 fw-bolder my-2">In Progress</span>')
+                        )
+                    ) . '</td> <td>
                         <div class="d-flex justify-content-end flex-shrink-0">
                             <a href="' . route('detailAppointment.show', [$row->id, $row->AppointmentNumber]) . '" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                 <span class="svg-icon svg-icon-3">
@@ -414,17 +513,21 @@ class DoctorController extends Controller
                 $selectedData->push($group->first());
             }
 
-            // Paginate the selected data
             $page = LengthAwarePaginator::resolveCurrentPage();
             $perPage = 10;
-            $sliced = $selectedData->slice(($page - 1) * $perPage, $perPage)->values();
+            $offset = ($page - 1) * $perPage;
+
+            // Slice the data for the current page
+            $sliced = $selectedData->slice($offset, $perPage)->values();
+
+            // Paginate the sliced data
             $paginatedAppointments = new LengthAwarePaginator($sliced, $selectedData->count(), $perPage, $page, [
                 'path' => LengthAwarePaginator::resolveCurrentPath(),
             ]);
 
             // Prepare the output for JSON response
             $output = '';
-            $rowCount = 1;
+            $rowCount = $offset + 1; // Adjust starting row count based on pagination offset
             foreach ($paginatedAppointments as $row) {
                 $output .= '
                 <tr>
@@ -488,20 +591,17 @@ class DoctorController extends Controller
     {
 
         $user = User::findOrFail($id);
-        // dd($user->doctor);
+        $request->validate([
+            'Name' => ['max:255'],
+            'phoneno' => ['max:10'],
+            'address' => ['max:255'],
+            'dob' => ['before:tomorrow'],
+            'qualification' => ['max:255'],
 
-        // dd($request->all());
-        // $request->validate([
-        //     'Name' => ['required', 'string', 'max:255'],
-        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        //     // 'phoneno' => ['required', 'int', 'max:10'],
-        //     // 'gender' => ['required'],
-        //     // 'address' => ['required', 'string', 'max:255'],
-        // ]);
+        ]);
 
         $user->update([
             'name' => $request->Name,
-            'email' => $request->email,
             'updated_at' => now(),
         ]);
 
@@ -509,6 +609,7 @@ class DoctorController extends Controller
             'phoneno' => $request->phoneno,
             'gender' => $request->gender,
             'address' => $request->address,
+            'qualification' => $request->qualification,
             'dob' => $request->dob,
             'updated_at' => now(),
         ]);
@@ -526,11 +627,24 @@ class DoctorController extends Controller
         return view('doctor.profile.security', compact('profile'));
     }
 
-    public function docpassupdate(Request $request, $id)
+    public function docemailupdate(Request $request, $id)
     {
         $user = User::findOrFail($id);
         $user->update([
             'password' => Hash::make($request->password),
+            'updated_at' => now(),
+        ]);
+        return to_route('docprofile');
+    }
+
+    public function docpassemail(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $request->validate([
+            'email' => ['string', 'email', 'max:255', new DifferentEmail($user->email), 'unique:users'],
+        ]);
+        $user->update([
+            'email' => $request->email,
             'updated_at' => now(),
         ]);
         return to_route('docprofile');

@@ -54,12 +54,22 @@
                             <!--begin: Pic-->
                             <div class="me-7 mb-4">
                                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                    @if (auth()->user()->role == 'doctor')
-                                        <img src="{{ asset('metronic/assets/media/avatars/doctor.svg') }}" alt="image" />
+                                    @if (auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == 'm')
+                                        <img src="{{ asset('metronic/assets/media/avatars/doctor.svg') }}" alt="user" />
+                                    @elseif(auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == 'f')
+                                        <img src="{{ asset('metronic/assets/media/avatars/fdoctor.svg') }}"
+                                            alt="user" />
+                                    @elseif(auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == '')
+                                        <img src="{{ asset('metronic/assets/media/avatars/blank.png') }}"
+                                            alt="user" />
                                     @elseif(auth()->user()->role == 'admin')
-                                        <img src="{{ asset('metronic/assets/media/avatars/admin.png') }}" alt="image" />
-                                    @else
-                                        <img src="{{ asset('metronic/assets/media/avatars/boy.svg') }}" alt="image" />
+                                        <img src="{{ asset('metronic/assets/media/avatars/admin.png') }}" alt="user" />
+                                    @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == 'm')
+                                        <img src="{{ asset('metronic/assets/media/avatars/boy.svg') }}" alt="user" />
+                                    @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == 'f')
+                                        <img src="{{ asset('metronic/assets/media/avatars/girl.svg') }}" alt="user" />
+                                    @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == '')
+                                        <img src="{{ asset('metronic/assets/media/avatars/blank.png') }}" alt="user" />
                                     @endif
                                     <div
                                         class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
@@ -132,9 +142,9 @@
                                         </div>
                                         <!--end::Info-->
                                         <a
-                                            class="text-gray-500 fs-2 fw-bolder me-1 ">{{ Auth::user()->doctor->specialization->specialization }}</a>
+                                            class="text-gray-500 fs-2 fw-bolder me-1 ">{{ Auth::user()->doctor->specialization->specialization ??""}}</a>
                                         <a
-                                            class="d-flex align-items-center text-gray-400 mb-2">{{ Auth::user()->doctor->qualification }}</a>
+                                            class="d-flex align-items-center text-gray-400 mb-2">{{ Auth::user()->doctor->qualification ??""}}</a>
                                     </div>
                                     <!--end::User-->
                                 </div>
@@ -199,10 +209,15 @@
                                         <!--begin::Row-->
                                         <div class="row">
                                             <!--begin::Col-->
-                                            <div class="col-lg-12 fv-row">
-                                                <input type="text" name="password"
-                                                    class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="Password" value="" required/>
+                                            <div class="position-relative mb-3">
+                                                <input class="form-control form-control-lg form-control-solid"
+                                                    type="password" placeholder=""  id="passvisible" name="password" autocomplete="off" />
+                                                <span
+                                                    class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                                    data-kt-password-meter-control="visibility" onclick="passfunction()">
+                                                    <i class="bi bi-eye-slash fs-2"></i>
+                                                    <i class="bi bi-eye fs-2 d-none"></i>
+                                                </span>
                                             </div>
                                             <!--end::Col-->
                                         </div>
@@ -224,8 +239,68 @@
                     <!--end::Content-->
                 </div>
                 <!--end::Basic info-->
+                <!--begin::Basic info-->
+                <div class="card mb-5 mb-xl-10">
+                    <!--begin::Card header-->
+                    <div class="card-header border-0">
+                        <!--begin::Card title-->
+                        <div class="card-title m-0">
+                            <h3 class="fw-bolder m-0">Change Email</h3>
+                        </div>
+                        <!--end::Card title-->
+                    </div>
+                    <!--begin::Card header-->
+                    <!--begin::Content-->
+                    <div id="kt_account_profile_details" class="collapse show">
+                        <!--begin::Form-->
+                        <form method="post" name="submit" id="kt_account_profile_details_form" class="form"
+                            action="{{ route('docemail.update', Auth::user()->id) }}">
+                            @csrf
+                            @method('put')
+                            <!--begin::Card body-->
+                            <div class="card-body border-top p-9">
+                               <!--begin::Input group-->
+                               <div class="row mb-6">
+                                <!--begin::Label-->
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Email</label>
+                                <!--end::Label-->
+                                <!--begin::Col-->
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" name="email"
+                                        class="form-control form-control-lg form-control-solid" placeholder="Email"
+                                        value="{{ Auth::user()->email }}" />
+                                    @error('email')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Input group-->
+                            </div>
+                            <!--end::Card body-->
+                            <!--begin::Actions-->
+                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                <button type="submit" class="btn btn-primary" name="submit">Save Changes</button>
+                            </div>
+                            <!--end::Actions-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Content-->
+                </div>
+                <!--end::Basic info-->
                 <!--end::details View-->
             </div>
         </div>
     </div>
+    <script>
+        function passfunction() {
+            var x = document.getElementById("passvisible");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
 @endsection

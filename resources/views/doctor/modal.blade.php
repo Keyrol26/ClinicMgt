@@ -24,9 +24,9 @@
                             <th>Status :</th>
                             <td>
                                 <select name="Status" class="form-control wd-450" required="true">
-                                    <option value="Approved" selected="true">Approved</option>
-                                    <option value="Cancelled">Cancelled</option>
-
+                                    <option value="Approved" {{ $appointment->Status == 'Approved' ? 'selected' : '' }}>Approved</option>
+                                    <option value="Cancelled" {{ $appointment->Status == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                    <option value="Rescheduled" {{ $appointment->Status == 'Rescheduled' ? 'selected' : '' }}>Rescheduled</option>
                                 </select>
                             </td>
                         </tr>

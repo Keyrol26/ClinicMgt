@@ -19,7 +19,7 @@
                             @if (auth()->user()->role == 'doctor')
                                 <a class="menu-link py-3" href="{{ route('doctor.home') }}">
                                 @elseif(auth()->user()->role == 'admin')
-                                    <a class="menu-link py-3" href="{{ route('userindex') }}">
+                                    <a class="menu-link py-3" href="{{ route('admin.index') }}">
                                     @else
                                         <a class="menu-link py-3" href="{{ route('userindex') }}">
                             @endif
@@ -34,7 +34,7 @@
                             @if (auth()->user()->role == 'doctor')
                                 <a class="menu-link py-3" href="{{ route('allapptdoc') }}">
                                 @elseif(auth()->user()->role == 'admin')
-                                    <a class="menu-link py-3" href="{{ route('booking-form') }}">
+                                    <a class="menu-link py-3" href="{{ route('admin.allapptdoc') }}">
                                     @else
                                         <a class="menu-link py-3" href="{{ route('booking-form') }}">
                             @endif
@@ -49,7 +49,7 @@
                             @if (auth()->user()->role == 'doctor')
                                 <a class="menu-link py-3" href="{{ route('docprofile') }}">
                                 @elseif(auth()->user()->role == 'admin')
-                                    <a class="menu-link py-3" href="{{ route('booking-form') }}">
+                                    <a class="menu-link py-3" href="{{ route('adminprofile') }}">
                                     @else
                                         <a class="menu-link py-3" href="{{ route('profile') }}">
                             @endif
@@ -73,12 +73,20 @@
                         <!--begin::Menu wrapper-->
                         <div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click"
                             data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                            @if (auth()->user()->role == 'doctor')
+                            @if (auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == 'm')
                                 <img src="{{ asset('metronic/assets/media/avatars/doctor.svg') }}" alt="user" />
+                            @elseif(auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == 'f')
+                                <img src="{{ asset('metronic/assets/media/avatars/fdoctor.svg') }}" alt="user" />
+                            @elseif(auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == '')
+                                <img src="{{ asset('metronic/assets/media/avatars/blank.png') }}" alt="user" />
                             @elseif(auth()->user()->role == 'admin')
-                                <img src="{{ asset('metronic/assets/media/avatars/doctor.svg') }}" alt="user" />
-                            @else
-                                <img src="{{ asset('metronic/assets/media/avatars/doctor.svg') }}" alt="user" />
+                                <img src="{{ asset('metronic/assets/media/avatars/admin.png') }}" alt="user" />
+                            @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == 'm')
+                                <img src="{{ asset('metronic/assets/media/avatars/boy.svg') }}" alt="user" />
+                            @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == 'f')
+                                <img src="{{ asset('metronic/assets/media/avatars/girl.svg') }}" alt="user" />
+                            @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == '')
+                                <img src="{{ asset('metronic/assets/media/avatars/blank.png') }}" alt="user" />
                             @endif
                         </div>
                         <!--begin::Menu-->
@@ -89,14 +97,26 @@
                                 <div class="menu-content d-flex align-items-center px-3">
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-50px me-5">
-                                        @if (auth()->user()->role == 'doctor')
+                                        @if (auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == 'm')
                                             <img src="{{ asset('metronic/assets/media/avatars/doctor.svg') }}"
+                                                alt="user" />
+                                        @elseif(auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == 'f')
+                                            <img src="{{ asset('metronic/assets/media/avatars/fdoctor.svg') }}"
+                                                alt="user" />
+                                        @elseif(auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == '')
+                                            <img src="{{ asset('metronic/assets/media/avatars/blank.png') }}"
                                                 alt="user" />
                                         @elseif(auth()->user()->role == 'admin')
-                                            <img src="{{ asset('metronic/assets/media/avatars/doctor.svg') }}"
+                                            <img src="{{ asset('metronic/assets/media/avatars/admin.png') }}"
                                                 alt="user" />
-                                        @else
-                                            <img src="{{ asset('metronic/assets/media/avatars/doctor.svg') }}"
+                                        @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == 'm')
+                                            <img src="{{ asset('metronic/assets/media/avatars/boy.svg') }}"
+                                                alt="user" />
+                                        @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == 'f')
+                                            <img src="{{ asset('metronic/assets/media/avatars/girl.svg') }}"
+                                                alt="user" />
+                                        @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == '')
+                                            <img src="{{ asset('metronic/assets/media/avatars/blank.png') }}"
                                                 alt="user" />
                                         @endif
                                     </div>
@@ -122,7 +142,7 @@
                                 @if (auth()->user()->role == 'doctor')
                                     <a href="{{ route('docprofile') }}" class="menu-link px-5">My Profile</a>
                                 @elseif(auth()->user()->role == 'admin')
-                                    <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
+                                    <a href="{{ route('adminprofile') }}" class="menu-link px-5">My Profile</a>
                                 @else
                                     <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
                                 @endif

@@ -54,12 +54,22 @@
                             <!--begin: Pic-->
                             <div class="me-7 mb-4">
                                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                    @if (auth()->user()->role == 'doctor')
-                                        <img src="metronic/assets/media/avatars/doctor.svg" alt="image" />
+                                    @if (auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == 'm')
+                                        <img src="{{ asset('metronic/assets/media/avatars/doctor.svg') }}" alt="user" />
+                                    @elseif(auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == 'f')
+                                        <img src="{{ asset('metronic/assets/media/avatars/fdoctor.svg') }}"
+                                            alt="user" />
+                                    @elseif(auth()->user()->role == 'doctor' && auth()->user()->doctor->gender == '')
+                                        <img src="{{ asset('metronic/assets/media/avatars/blank.png') }}"
+                                            alt="user" />
                                     @elseif(auth()->user()->role == 'admin')
-                                        <img src="metronic/assets/media/avatars/admin.png" alt="image" />
-                                    @else
-                                        <img src="metronic/assets/media/avatars/boy.svg" alt="image" />
+                                        <img src="{{ asset('metronic/assets/media/avatars/admin.png') }}" alt="user" />
+                                    @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == 'm')
+                                        <img src="{{ asset('metronic/assets/media/avatars/boy.svg') }}" alt="user" />
+                                    @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == 'f')
+                                        <img src="{{ asset('metronic/assets/media/avatars/girl.svg') }}" alt="user" />
+                                    @elseif(auth()->user()->role == 'user' && auth()->user()->patient->gender == '')
+                                        <img src="{{ asset('metronic/assets/media/avatars/blank.png') }}" alt="user" />
                                     @endif
                                     <div
                                         class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
@@ -153,6 +163,12 @@
                                     href="{{ route('usersetting') }}">Settings</a>
                             </li>
                             <!--end::Nav item-->
+                            <!--begin::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5"
+                                    href="{{ route('usersecurity') }}">Security</a>
+                            </li>
+                            <!--end::Nav item-->
                         </ul>
                         <!--begin::Navs-->
                     </div>
@@ -206,7 +222,8 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8 d-flex align-items-center">
-                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{ Auth::user()->patient->phoneno }}</span>
+                                <span
+                                    class="fw-bolder fs-6 text-gray-800 me-2">{{ Auth::user()->patient->phoneno }}</span>
                             </div>
                             <!--end::Col-->
                         </div>
@@ -232,7 +249,7 @@
                             <div class="col-lg-8">
                                 @if (Auth::user()->patient->gender == 'm')
                                     <span class="fw-bolder fs-6 text-gray-800">Male</span>
-                                @elseif (Auth::user()->doctor->gender == 'f')
+                                @elseif (Auth::user()->patient->gender == 'f')
                                     <span class="fw-bolder fs-6 text-gray-800">Female</span>
                                 @endif
 

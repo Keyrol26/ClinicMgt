@@ -22,7 +22,7 @@
                         <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                         <!--end::Separator-->
                         <!--begin::Description-->
-                        <small class="text-muted fs-7 fw-bold my-1 ms-1">Appoinment History List</small>
+                        <small class="text-muted fs-7 fw-bold my-1 ms-1">Rescheduled Appoinment</small>
                         <!--end::Description-->
                     </h1>
                     <!--end::Title-->
@@ -50,7 +50,7 @@
                             <!--begin::Header-->
                             <div class="card-header border-0 pt-5">
                                 <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bolder fs-3 mb-1">Appointment History</span>
+                                    <span class="card-label fw-bolder fs-3 mb-1">Rescheduled Appointment</span>
                                 </h3>
                                 <div class="card-toolbar">
                                     <input type="text" name="search" id="search" class="form-control"

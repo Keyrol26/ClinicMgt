@@ -52,6 +52,10 @@
                                 <h3 class="card-title align-items-start flex-column">
                                     <span class="card-label fw-bolder fs-3 mb-1">Appointment History</span>
                                 </h3>
+                                <div class="card-toolbar">
+                                    <input type="text" name="search" id="search" class="form-control"
+                                        placeholder="Search Appointments">
+                                </div>
                                 <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top"
                                     data-bs-trigger="hover" title="Click to book an appoinment">
                                     <a href="/booking-apt" class="btn btn-sm btn-light btn-active-primary">

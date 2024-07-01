@@ -287,12 +287,12 @@
                         </div>
                         <!--begin::Actions-->
                         <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-trigger="hover" title="Click to delete this appoinment">
+                            data-bs-trigger="hover" title="Click to delete this patient">
                             <a class="btn btn-sm btn-light btn-active-danger" data-toggle="modal"
                                 data-target="#deletemodal">
                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                                 <i class="bi bi-trash"></i>
-                                <!--end::Svg Icon-->Delete Appointment</a>
+                                <!--end::Svg Icon-->Delete Patient</a>
                         </div>
                         <div class="modal fade" id="deletemodal" data-backdrop="static" tabindex="-1" role="dialog"
                             aria-labelledby="staticBackdrop" aria-hidden="true">

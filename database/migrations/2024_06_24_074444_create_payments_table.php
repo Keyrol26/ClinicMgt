@@ -19,7 +19,7 @@ return new class extends Migration
             $table->float('amount');
             $table->timestamps();
 
-            $table->foreign('patient_id')->references('id')->on('patients');
+            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('appt_id')->references('id')->on('appointments')->onDelete('cascade')->onUpdate('cascade');
         });
     }

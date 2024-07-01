@@ -34,9 +34,9 @@ return new class extends Migration
             $table->timestamps();
 
             
-            $table->foreign('patient_id')->references('id')->on('patients');
-            $table->foreign('doctor_id')->references('id')->on('doctors');
-            $table->foreign('AppointmentTime_id')->references('id')->on('booking_times');
+            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('AppointmentTime_id')->references('id')->on('booking_times')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

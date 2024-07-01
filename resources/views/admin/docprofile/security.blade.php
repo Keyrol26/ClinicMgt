@@ -292,12 +292,12 @@
                         </div>
                         <!--begin::Actions-->
                         <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-trigger="hover" title="Click to delete this appoinment">
+                            data-bs-trigger="hover" title="Click to delete this doctor">
                             <a class="btn btn-sm btn-light btn-active-danger" data-toggle="modal"
                                 data-target="#deletemodal">
                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                                 <i class="bi bi-trash"></i>
-                                <!--end::Svg Icon-->Delete Appointment</a>
+                                <!--end::Svg Icon-->Delete Doctor</a>
                         </div>
                         <div class="modal fade" id="deletemodal" data-backdrop="static" tabindex="-1" role="dialog"
                             aria-labelledby="staticBackdrop" aria-hidden="true">
@@ -315,9 +315,9 @@
                                         </div>
                                         <div class="modal-body">
                                             <h5 class="modal-title" id="exampleModalLabel">Confirm Delete this
-                                                Patient?</h5>
+                                                Doctor?</h5>
                                             <br>
-                                            <span class="modal-title" id="exampleModalLabel">Patient Id:
+                                            <span class="modal-title" id="exampleModalLabel">Doctor Id:
                                                 {{ $profile->user->id ?? '-' }}</span>
                                         </div>
                                         <div class="modal-footer">

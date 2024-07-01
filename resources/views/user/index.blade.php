@@ -165,7 +165,7 @@
                                             <span class="fw-bold text-muted fs-5">To cure sometimes, to relieve often, to
                                                 comfort always.</span>
                                         </div>
-                                        <img src="metronic/assets/media/svg/avatars/029-boy-11.svg" alt=""
+                                        <img src="metronic/assets/media/avatars/029-boy-11.svg" alt=""
                                             class="align-self-end h-100px" />
                                     @endforeach
                                 </div>
@@ -187,7 +187,7 @@
                                             <span class="fw-bold text-muted fs-5">The best way to find yourself is to lose
                                                 yourself in the service of others.</span>
                                         </div>
-                                        <img src="metronic/assets/media/svg/avatars/004-boy-1.svg" alt=""
+                                        <img src="metronic/assets/media/avatars/004-boy-1.svg" alt=""
                                             class="align-self-end h-100px" />
                                     @endforeach
                                 </div>

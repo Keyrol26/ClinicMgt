@@ -1,7 +1,7 @@
 <div class="mb-0" id="home">
     <!--begin::Wrapper-->
     <div class="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg"
-        style="background-image: url({{ asset('metronic/assets/media/svg/illustrations/landing.svg') }})">
+        style="background-image: url({{ asset('metronic/assets/media/bg/landing.svg') }})">
         <!--begin::Header-->
         <div class="landing-header" data-kt-sticky="true" data-kt-sticky-name="landing-header"
             data-kt-sticky-offset="{default: '200px', lg: '300px'}">

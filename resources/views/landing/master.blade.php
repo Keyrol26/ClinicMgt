@@ -47,7 +47,7 @@
                         <!--begin::Story-->
                         <div class="text-center mb-10 mb-md-0">
                             <!--begin::Illustration-->
-                            <img src="{{ URL::asset('metronic/assets/media/illustrations/sigma-1/2.png') }}"
+                            <img src="{{ URL::asset('metronic/assets/media/bg/2.png') }}"
                                 class="mh-125px mb-9" alt="" />
                             <!--end::Illustration-->
                             <!--begin::Heading-->
@@ -75,7 +75,7 @@
                         <!--begin::Story-->
                         <div class="text-center mb-10 mb-md-0">
                             <!--begin::Illustration-->
-                            <img src="{{ URL::asset('metronic/assets/media/illustrations/sigma-1/8.png') }}"
+                            <img src="{{ URL::asset('metronic/assets/media/bg/8.png') }}"
                                 class="mh-125px mb-9" alt="" />
                             <!--end::Illustration-->
                             <!--begin::Heading-->
@@ -142,7 +142,7 @@
             </div>
             <!--end::Curve top-->
             <!--begin::Container-->
-            <div class="pb-15 pt-18 landing-dark-bg">
+            <div class="pb-15 pt-18 landing-dark-bg" style="background-image: url({{ asset('metronic/assets/media/bg/landing.svg') }})">>
                 <div class="container">
                     <!--begin::Heading-->
                     <div class="text-center mb-12">

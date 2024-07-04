@@ -655,7 +655,7 @@ class AdminController extends Controller
 
         // dd($request->all());
         $request->validate([
-            'Name' => ['required', 'string', 'min:255'],
+            'Name' => ['required', 'string', 'max:255'],
         ]);
 
         $user->update([
@@ -870,6 +870,7 @@ class AdminController extends Controller
         $email = $f5name . '' . '@clinic.com';
         $dob = Carbon::parse($request->dob)->format('d');
         $password = $f5name . '' . $dob;
+        
         $user = User::create([
             'name' => $request->Name,
             'email' => $email,

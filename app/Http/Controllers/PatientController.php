@@ -122,7 +122,8 @@ class PatientController extends Controller
                 'amount' => 5000, // Amount in cents
                 'currency' => 'MYR',
                 'source' => $request->stripeToken,
-                'description' => 'Booking Appointment payment'
+                'description' => 'Booking Appointment payment for ' . $request->Name .','. Auth::user()->patient->id . "," . Auth::user()->email,
+                // 'customer' => $request->Name .','. Auth::user()->patient->id . "," . Auth::user()->email,
             ]);
 
             // Create appointment record in the database
